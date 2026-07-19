@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SHW Tracker">
+  <meta name="theme-color" content="#0A0A1A">
+  <title>SHW Legacy — Payment Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ANIMATED BACKGROUND -->
+  <div class="bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="header-monogram">S</div>
+          <div>
+            <div class="header-title">SHW Legacy</div>
+            <div class="header-sub">Stewart · Hicks · Williams · 2026</div>
+          </div>
+        </div>
+        <button class="overview-btn" onclick="openOv()">Overview</button>
+      </div>
+    </div>
+
+    <!-- STATS — tap any card to see detail breakdown -->
+    <div class="stats-wrap">
+      <div class="stat-card stat-tap" onclick="showStatDetail('collected')">
+        <div class="stat-v green" id="s-col">$0</div>
+        <div class="stat-l">Collected ›</div>
+      </div>
+      <div class="stat-card stat-tap" onclick="showStatDetail('inhand')">
+        <div class="stat-v blue" id="s-hand">$0</div>
+        <div class="stat-l">In hand ›</div>
+      </div>
+      <div class="stat-card stat-tap" onclick="showStatDetail('shortfall')">
+        <div class="stat-v red" id="s-short">$0</div>
+        <div class="stat-l">Shortfall ›</div>
+      </div>
+      <div class="stat-card stat-tap" onclick="showStatDetail('fullpaid')">
+        <div class="stat-v gold" id="s-full">0/20</div>
+        <div class="stat-l">Fully paid ›</div>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="prog-wrap">
+      <div class="prog-row">
+        <span>Collection progress</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="track">
+        <div class="track-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- DEADLINE -->
+    <div class="deadline-wrap">
+      <div class="deadline-lbl">⏰ Deadline</div>
+      <input class="deadline-input" type="date" id="deadline" value="2026-09-25" onchange="onDL()">
+      <div class="countdown-badge" id="cdown"></div>
+    </div>
+
+    <!-- PEOPLE LIST (rendered by JS) -->
+    <div class="content" id="content"></div>
+
+  </div><!-- /.app -->
+
+  <!-- STICKY COPY FOOTER -->
+  <div class="copy-footer">
+    <button class="copy-btn" id="copyBtn" onclick="doCopy()">
+      📋 Copy payment reminder
+    </button>
+  </div>
+
+  <!-- STAT DETAIL MODAL -->
+  <div class="modal-overlay" id="stat-overlay" onclick="closeStatIfOutside(event)">
+    <div class="modal" id="stat-modal">
+      <div class="modal-handle"></div>
+      <div class="modal-hdr">
+        <div class="modal-title" id="stat-title">Detail</div>
+        <button class="modal-close" onclick="closeStat()">✕</button>
+      </div>
+      <div class="modal-body" id="stat-body"></div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW MODAL -->
+  <div class="modal-overlay" id="ov-overlay" onclick="closeOvOutside(event)">
+    <div class="modal" id="ov-modal">
+      <div class="modal-handle"></div>
+      <div class="modal-hdr">
+        <div class="modal-title">Overview</div>
+        <button class="modal-close" onclick="closeOv()">✕</button>
+      </div>
+      <div class="modal-body" id="ov-body"></div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
